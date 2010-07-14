@@ -11,27 +11,27 @@ try {
 }
 
 function filter(root, url) {
-	url = "/" + (url || "") + "/";
-	function baseUrl(name) {
-		return path.normalize("/" + url + "/" + name);
-	}
-	
-	if (have_openssl) {
-		return function(data, callback) {
-			var file = path.normalize(root + "/" + data);
-			fs.readFile(file, 'binary', function(err, readed) {
-				var hash = baseUrl(data);
-				if (!err) {
-					hash += "?v=" + crypto.createHash("sha1").
-							update(readed).digest("hex");
-				}
-				callback(undefined, hash);
-			});
-		};
-	} else {
-		return function(data, callback) {
-			callback(undefined,	baseUrl(data));
-		};
-	}
+    url = "/" + (url || "") + "/";
+    function baseUrl(name) {
+        return path.normalize("/" + url + "/" + name);
+    }
+    
+    if (have_openssl) {
+        return function(data, callback) {
+            var file = path.normalize(root + "/" + data);
+            fs.readFile(file, 'binary', function(err, readed) {
+                var hash = baseUrl(data);
+                if (!err) {
+                    hash += "?v=" + crypto.createHash("sha1").
+                            update(readed).digest("hex");
+                }
+                callback(undefined, hash);
+            });
+        };
+    } else {
+        return function(data, callback) {
+            callback(undefined,    baseUrl(data));
+        };
+    }
 }
 exports.filter = filter; 
