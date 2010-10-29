@@ -49,7 +49,7 @@ Code:
         
         var buffer = '';
         output.addListener('data', function(data){ buffer += data; })
-              .addListener('end', function(){ sys.puts(buffer) });
+              .addListener('end', function(){ console.log(buffer) });
     });
     
 Output:
